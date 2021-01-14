@@ -10,11 +10,13 @@ function mergeToString(srcStrings, options) {
     const targetDoc = create({
         testsuites: {},
     });
+    const targetSuite = targetDoc.root().ele("testsuite", { name: "merged" });
 
     const attrs = {
         failures: 0,
         errors: 0,
         tests: 0,
+        time: 0.0,
     };
 
     srcStrings.forEach((srcString) => {
@@ -29,7 +31,13 @@ function mergeToString(srcStrings, options) {
                             attrs[name] += Number(attrNode.value);
                         }
                     }
-                    targetDoc.root().import(xmlBuilder);
+                    xmlBuilder.each((testcase) => {
+                        if (
+                            testcase.node.nodeName.toLowerCase() === "testcase"
+                        ) {
+                            targetSuite.import(testcase);
+                        }
+                    });
                 }
             },
             true,
