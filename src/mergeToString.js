@@ -10,7 +10,7 @@ function mergeToString(srcStrings, options) {
     const targetDoc = create({
         testsuites: {},
     });
-    const targetSuite = targetDoc.root().ele("testsuite", { name: "merged" });
+    const targetSuite = targetDoc.root().ele("testsuite", { name: "pytest" });
 
     const attrs = {
         failures: 0,
